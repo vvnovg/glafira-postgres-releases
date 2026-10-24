@@ -15,6 +15,8 @@ nodes are alive, who the leader is, how far replicas lag and how the databases a
 4. Click “Test”: the app shows which steps passed and a diagnostics readiness checklist.
 5. Save the connection and expand it in the tree.
 
+To connect through a bastion, see [SSH tunnel](connections.md#ssh); for the tree and the tabs of tables, views, functions and sequences, see [Tree](objects.md#tree) and [Object tabs](objects.md#tabs).
+
 <a id="passwords"></a>
 
 ## Passwords
@@ -27,4 +29,4 @@ is set, `~/.pgpass` is used, as in `psql`.
 ## A role for diagnostics
 
 Full diagnostics need the `pg_monitor` and `pg_signal_backend` roles; the role creation script is in the
-connection test checklist.
+connection test checklist. The last value of a sequence is shown only to a role with the `SELECT` or `USAGE` privilege on it; see [Object tabs](objects.md#tabs).
