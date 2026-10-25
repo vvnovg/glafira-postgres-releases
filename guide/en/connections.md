@@ -73,9 +73,9 @@ A refused login is different. If the bastion rejects the login (a wrong password
 
 ## Patroni
 
-For a **Patroni cluster** connection, enter the Patroni REST API in **REST API addresses**: from 1 to 8 addresses starting with `http://` or `https://`, without `user:password@`. The app asks them in order until one answers; the member list comes from `GET /cluster`. It only reads: it never changes the cluster.
+For a **Patroni cluster** connection, enter the Patroni REST API in **REST API addresses**: from 1 to 8 addresses starting with `http://` or `https://`, without `user:password@`. The app asks them in order until one answers; the member list comes from `GET /cluster`. Reading and diagnostics change nothing; the app changes the cluster only through the Patroni actions in the overview (switchover, failover, restart, pause) — see [Patroni actions](diagnostics.md#patroni-actions).
 
-- **API user** and **API password** — basic authentication, if the API requires it. The password goes to the system secret store. If all your API addresses are `https://`, the app does not send the password to a member that reports an `http://` address.
+- **API user** and **API password** — basic authentication, if the API requires it; Patroni actions need the login. The password goes to the system secret store. If all your API addresses are `https://`, the app does not send the password to a member that reports an `http://` address.
 - **TLS for the API** — TLS settings for `https://` addresses: a CA file instead of the system roots, host name verification and a client certificate (PEM, or PKCS#12). A client certificate is needed if Patroni requires one (`restapi.verify_client: required`).
 - **Node address overrides** — for members whose reported addresses your computer cannot reach (a pod IP, NAT). For a member name, set the PostgreSQL host and port and the address of its API. Behind an SSH tunnel the bastion resolves the names that Patroni reports, so overrides are usually not needed there.
 
@@ -91,6 +91,7 @@ The **Readiness for diagnostics** list shows what the app needs for full diagnos
 
 - **Monitoring role** — the role is a superuser or a member of `pg_monitor`. Without it, queries of other users, `pg_stat_statements` and the size of `pg_wal` are not visible.
 - **Cancel and terminate sessions** — membership in `pg_signal_backend`.
+- **Dropping replication slots** — the `REPLICATION` attribute: it is needed to drop replication slots and gives the role extra abilities (reading changes through logical slots, copying the cluster), so give it to a separate role for actions, or not at all; see [Actions](diagnostics.md#actions) and the administrator guide.
 - **Table maintenance** — `pg_maintain` (PostgreSQL 17 and newer); before 17, `VACUUM` and `ANALYZE` work only for the user's own tables.
 - `pg_stat_statements` — loaded through `shared_preload_libraries` on every node (this needs a restart; in Patroni, change it with `patronictl edit-config`), and created in the database with `CREATE EXTENSION`. Create it in every database where you need query analysis.
 - `compute_query_id`, `track_io_timing` and `track_activity_query_size` (at least 4096).
