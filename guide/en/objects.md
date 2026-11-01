@@ -36,7 +36,7 @@ Everything on the tabs is read-only. Data is read when the tab opens; **Refresh*
 - **Indexes** — definition, flags (`PRIMARY KEY`, `UNIQUE`, and `INVALID` for an index that is not usable), size, and usage from the statistics: index scans, entries read and the time of the last scan.
 - **Constraints** — primary key, unique, foreign key, check and exclusion constraints with their definitions; a constraint that has not been validated is marked `NOT VALID`. Below, **Incoming foreign keys** lists the tables that reference this one.
 - **Size and statistics** — the table data, indexes, TOAST and the total size; the estimated number of rows; sequential and index scans; live and dead rows; rows changed since the last analyze; the time and the number of runs of vacuum, autovacuum, analyze and autoanalyze; storage parameters, tablespace and owner. For a partitioned table, sizes and counters are summed over the whole partition tree, partition by partition: each partition is opened only for the moment of the count (a short shared lock that is released at once), so the app never holds locks on all the partitions at the same time and does not exhaust the lock table of the server.
-- **Partitioning** — only for a partitioned table and for a partition: the partition key, the partition bound, the parent table and the list of partitions.
+- **Partitioning** — only for a partitioned table and for a partition: the partition key, the partition bound, the parent table and the list of partitions; the parent and each partition are links that open the table tab.
 - **Triggers** — name, state (enabled, disabled, replica only or always) and definition.
 - **DDL** — see the next section.
 
