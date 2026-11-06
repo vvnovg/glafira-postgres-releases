@@ -9,6 +9,8 @@
 - [Tree and objects](en/objects.md)
 - [Diagnostics](en/diagnostics.md)
 - [Queries](en/queries.md)
+- [LLM assistants (MCP)](en/llm-mcp.md)
+- [Local models](en/local-llm.md)
 - [Updates and diagnostics](en/updates.md)
 
 ## Русский
@@ -18,4 +20,6 @@
 - [Дерево и объекты](ru/objects.md)
 - [Диагностика](ru/diagnostics.md)
 - [Запросы](ru/queries.md)
+- [LLM-ассистенты (MCP)](ru/llm-mcp.md)
+- [Локальные модели](ru/local-llm.md)
 - [Обновления и диагностика](ru/updates.md)
